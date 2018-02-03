@@ -1,88 +1,3 @@
-# copy paste this file in bit by bit.
-# don't run it.
-  echo "do not run this script in one go. hit ctrl-c NOW"
-  read -n 1
-
-
-##############################################################################################################
-###  backup old machine's key items
-
-mkdir -p ~/migration/home/
-mkdir -p ~/migration/Library/"Application Support"/
-mkdir -p ~/migration/Library/Preferences/
-mkdir -p ~/migration/Library/Application Support/
-mkdir -p ~/migration/rootLibrary/Preferences/SystemConfiguration/
-
-cd ~/migration
-
-# what is worth reinstalling?
-brew leaves              > brew-list.txt    # all top-level brew installs
-brew cask list           > cask-list.txt
-npm list -g --depth=0    > npm-g-list.txt
-yarn global ls --depth=0 > yarn-g-list.txt
-
-# then compare brew-list to what's in `brew.sh`
-#   comm <(sort brew-list.txt) <(sort brew.sh-cleaned-up)
-
-# backup some dotfiles likely not under source control
-cp -Rp \
-    ~/.bash_history \
-    ~/.extra ~/.extra.fish \
-    ~/.gitconfig.local \
-    ~/.gnupg \
-    ~/.nano \
-    ~/.nanorc \
-    ~/.netrc \
-    ~/.ssh \
-    ~/.z   \
-        ~/migration/home
-
-cp -Rp ~/Documents ~/migration
-
-cp -Rp /Library/Preferences/SystemConfiguration/com.apple.airport.preferences.plist ~/migration/rootLibrary/Preferences/SystemConfiguration/ # wifi
-
-cp -Rp ~/Library/Preferences/net.limechat.LimeChat.plist ~/migration/Library/Preferences/
-cp -Rp ~/Library/Preferences/com.tinyspeck.slackmacgap.plist ~/migration/Library/Preferences/
-
-cp -Rp ~/Library/Services ~/migration/Library/ # automator stuff
-cp -Rp ~/Library/Fonts ~/migration/Library/ # all those fonts you've installed
-
-# editor settings & plugins
-cp -Rp ~/Library/Application\ Support/Sublime\ Text\ * ~/migration/Library/"Application Support"
-cp -Rp ~/Library/Application\ Support/Code\ -\ Insider* ~/migration/Library/"Application Support"
-
-# also consider...
-# random git branches you never pushed anywhere?
-# git untracked files (or local gitignored stuff). stuff you never added, but probably want..
-
-
-# OneTab history pages, because chrome tabs are valuable.
-
-# usage logs you've been keeping.
-
-# iTerm settings.
-  # Prefs, General, Use settings from Folder
-
-# Finder settings and TotalFinder settings
-#   Not sure how to do this yet. Really want to.
-
-# Timestats chrome extension stats
-#   chrome-extension://ejifodhjoeeenihgfpjijjmpomaphmah/options.html#_options
-# 	gotta export into JSON through devtools:
-#     copy(JSON.stringify(localStorage))
-#     pbpaste > timestats-canary.json.txt
-
-# software licenses.
-#   sublimetext's is in its Application Support folder
-
-# maybe ~/Pictures and such
-cp -Rp ~/Pictures ~/migration
-
-### end of old machine backup
-##############################################################################################################
-
-
-
 ##############################################################################################################
 ### XCode Command Line Tools
 #      thx https://github.com/alrra/dotfiles/blob/ff123ca9b9b/os/os_x/installs/install_xcode.sh
@@ -138,8 +53,15 @@ export PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
 ### end of homebrew
 ##############################################################################################################
 
+##############################################################################################################
+### version management for dev language
+
+# nvm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 
 
+### end version management for dev language
+##############################################################################################################
 
 ##############################################################################################################
 ### install of common things
@@ -151,20 +73,20 @@ bash < <( curl https://raw.github.com/jamiew/git-friendly/master/install.sh)
 
 
 # Type `git open` to open the GitHub page or website for a repository.
-npm install -g git-open
+# npm install -g git-open
 
 # fancy listing of recent branches
-npm install -g git-recent
+# npm install -g git-recent
 
 # sexy git diffs
-npm install -g diff-so-fancy
+# npm install -g diff-so-fancy
 
 # trash as the safe `rm` alternative
-npm install --global trash-cli
+# npm install --global trash-cli
 
 # install better nanorc config
 # https://github.com/scopatz/nanorc
-curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
+# curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
 # github.com/rupa/z   - oh how i love you
 git clone https://github.com/rupa/z.git ~/code/z
@@ -174,7 +96,7 @@ git clone https://github.com/rupa/z.git ~/code/z
 
 # github.com/thebitguru/play-button-itunes-patch
 # disable itunes opening on media keys
-git clone https://github.com/thebitguru/play-button-itunes-patch ~/code/play-button-itunes-patch
+# git clone https://github.com/thebitguru/play-button-itunes-patch ~/code/play-button-itunes-patch
 
 
 # my magic photobooth symlink -> dropbox. I love it.
@@ -186,7 +108,7 @@ git clone https://github.com/thebitguru/play-button-itunes-patch ~/code/play-but
 
 
 # for the c alias (syntax highlighted cat)
-sudo easy_install Pygments
+# sudo easy_install Pygments
 
 
 # change to bash 4 (installed by homebrew)
@@ -220,11 +142,11 @@ sudo sysctl kern.maxvnodes=$((512*1024))
 echo kern.maxvnodes=$((512*1024)) | sudo tee -a /etc/sysctl.conf
 
 # speed up git status (to run only in chromium repo)
-git config status.showuntrackedfiles no
-git update-index --untracked-cache
+# git config status.showuntrackedfiles no
+# git update-index --untracked-cache
 
 # also this unrelated thing
-git config user.email "paulirish@chromium.org"
+git config user.email "zsney.lzhou@gmail.com"
 
 
 ##############################################################################################################

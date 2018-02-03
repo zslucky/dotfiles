@@ -61,7 +61,7 @@ brew install fzf
 
 brew install git
 brew install imagemagick --with-webp
-brew install node # This installs `npm` too using the recommended installation method
+# brew install node # This installs `npm` too using the recommended installation method
 brew install pv
 brew install rename
 brew install tree
@@ -70,7 +70,7 @@ brew install ffmpeg --with-libvpx
 
 brew install terminal-notifier
 
-brew install android-platform-tools
+# brew install android-platform-tools
 brew install pidcat   # colored logcat guy
 
 brew install ncdu # find where your diskspace went
